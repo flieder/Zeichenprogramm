@@ -2,11 +2,8 @@
 #define H_BMP
 
 
-
-
 #include <string>
 #include "bmpheader.h"
-
 
 
 // NOTE: const correctness is NOT enforced here!
@@ -70,8 +67,6 @@ namespace bmp
 		unsigned int height;
 	};
 }
-
-
 
 
 #endif

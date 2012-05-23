@@ -2,8 +2,6 @@
 #define H_LEAST_TYPES
 
 
-
-
 #include <climits>
 
 
@@ -96,8 +94,6 @@ namespace least_types
 			        type;
 		};
 }
-
-
 
 
 #endif // H_LEAST_TYPES

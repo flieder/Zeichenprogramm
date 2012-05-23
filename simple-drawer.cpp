@@ -1,5 +1,6 @@
 #include "batchbmp.h"
-#include "line.h"
+//#include "line.h"
+#include "basicDrawables.h"
 //#include "test.h"
 
 #include <iostream>
@@ -7,33 +8,35 @@
 
 int main()
 {
-	bmp::BatchBitmap24 blackBitmap(200, 200);
+	//Bitmap anlegen und Farben definieren
+	bmp::BatchBitmap24 sampleBitmap(200, 200);
 
 	bmp::Color24 blue = {0, 0, 255};
-
-	for(unsigned int iRow = 0; iRow < blackBitmap.getHeight(); ++iRow)
-	{
-		for(unsigned int iColumn = 0; iColumn < blackBitmap.getWidth(); ++iColumn)
-		{
-			blackBitmap.setPixel(iColumn, iRow, blue);
-		}
-	}
-
 	bmp::Color24 red = {255, 0, 0};
-	bmp::AbsoluteCoordinate end(blackBitmap);
-	blackBitmap.setCurrentColor(red);
+
+
+	//Bitmap einfärben mit aktueller Farbe = blau
+	sampleBitmap.setCurrentColor(blue);
+	bmp::fillBitmap fuellung;
+	fuellung.applyTo(sampleBitmap);
+
+
+	//Linie zum Endpunkt "end" in aktueller Farbe = blau malen
+	bmp::AbsoluteCoordinate end(sampleBitmap);
+	sampleBitmap.setCurrentColor(red);
 	if(!end.set(90, 50))
 	{
 		std::cout << "error!" << std::endl;
-	}else
+	}
+	else
 	{
 		bmp::lineto myLine( end.convert() );
-		myLine.applyTo(blackBitmap);
+		myLine.applyTo(sampleBitmap);
 	}
 
 
-
-	blackBitmap.save("foo.bmp");
+	//Bitmap abspeichern
+	sampleBitmap.save("foo.bmp");
 
 	return 0;
 }

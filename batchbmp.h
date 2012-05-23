@@ -2,8 +2,6 @@
 #define H_BATCHBITMAP24
 
 
-
-
 #include <istream>
 #include <utility>
 #include "bmp.h"
