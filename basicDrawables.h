@@ -36,6 +36,9 @@ namespace bmp
 		bmp::RelativeCoordinate to;
 	};
 
+
+	//Klasse "fillBitmap" abgeleitet von IBatchDrawable. Füllt die in "ApplyTo" übergeben
+	//BatchBitmap24 mit der aktuellen Farbe
 	class fillBitmap
 		: public IBatchDrawable
 	{
@@ -44,6 +47,29 @@ namespace bmp
 		virtual ~fillBitmap();
 
 		virtual bool applyTo(bmp::BatchBitmap24& p);
+	};
+
+
+	//Klasse circle: kann Kreis um Punkt mit gegebenem Radius (in Pixel) und Farbe in eine Bitmap24 malen
+	class circle
+	{
+	public:
+		bool draw(bmp::Bitmap24& p_target, AbsoluteCoordinate p_from, unsigned int radius, Color24 p_color);
+	};
+
+	//Klasse circleRound: kann Kreis um aktuelle Position mit Radius und aktueller Farbe in BatchBitmap24 malen
+	//Achtung: alle angaben (Koordinaten, Radius) relativ!
+	class circleRound
+		: public IBatchDrawable
+	{
+	public:
+		circleRound(float r);
+		virtual ~circleRound();
+
+		bool applyTo(bmp::BatchBitmap24& p);
+
+	private:
+		float radius;
 	};
 
 }

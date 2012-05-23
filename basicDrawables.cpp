@@ -84,6 +84,55 @@ namespace bmp
 		return true;
 	}
 
+	bool circle::draw(bmp::Bitmap24& p_target, AbsoluteCoordinate p_from, unsigned int radius, Color24 p_color)
+	{
+		unsigned int xMitte = p_from.getX();
+		unsigned int yMitte = p_from.getY();
+
+		if(((p_target.getHeight()-yMitte) < radius) || (yMitte < radius) || ((p_target.getWidth()-xMitte) < radius) || (xMitte < radius))
+		{
+			return false;
+		}
+
+		//x-Werte von xMitte-r bis xMitte + r durchlaufen
+		for(unsigned int ispalte = -radius; ispalte < (radius+1); ++ispalte)
+		{
+			//einzufärbende y-Werte nach Kreisgleichung x^2+y^2 = r^2 bestimmen
+			unsigned int xAbs = xMitte + ispalte;
+			unsigned int ireihe = round(std::sqrt(radius*radius - ispalte*ispalte));
+			unsigned int yAbs1 = yMitte + ireihe;
+			unsigned int yAbs2 = yMitte - ireihe;
+
+			p_target.setPixel(xAbs, yAbs1, p_color);
+			if(yAbs1 != yAbs2)
+			{
+				p_target.setPixel(xAbs, yAbs2, p_color);
+			}
+		}
+
+		return true;
+	}
+
+	circleRound::circleRound(float r)
+		: radius(r)
+	{}
+
+	circleRound::~circleRound()
+	{}
+
+	bool circleRound::applyTo(bmp::BatchBitmap24& p)
+	{
+		circle kreisObj;
+		unsigned int radiusAbs = static_cast<unsigned int>(round(radius));
+
+		if(!kreisObj.draw(p, p.getCurrentPos(), radiusAbs, p.getCurrentColor()))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	int round(float zahl)
 	{
 		int gerundet = 0;

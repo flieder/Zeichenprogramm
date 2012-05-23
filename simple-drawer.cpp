@@ -13,6 +13,7 @@ int main()
 
 	bmp::Color24 blue = {0, 0, 255};
 	bmp::Color24 red = {255, 0, 0};
+	bmp::Color24 green = {0, 255, 0};
 
 
 	//Bitmap einfärben mit aktueller Farbe = blau
@@ -31,7 +32,29 @@ int main()
 	else
 	{
 		bmp::lineto myLine( end.convert() );
-		myLine.applyTo(sampleBitmap);
+		if (!myLine.applyTo(sampleBitmap))
+		{
+			std::cout << "error!" << std::endl;
+		}
+	}
+
+
+	//Kreis mit grün malen
+	bmp::AbsoluteCoordinate mittelpunkt(sampleBitmap);
+	if(!mittelpunkt.set(100,100))
+	{
+		std::cout << "error!" << std::endl;
+	}
+	else
+	{
+		sampleBitmap.setCurrentPos(mittelpunkt);
+		sampleBitmap.setCurrentColor(green);
+		bmp::circleRound kreis(50.00f);
+
+		if(!(kreis.applyTo(sampleBitmap)))
+		{
+			std::cout << "error!" << std::endl;
+		}
 	}
 
 
