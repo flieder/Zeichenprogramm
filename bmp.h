@@ -46,6 +46,7 @@ namespace bmp
 		// accessors to single pixels, a pixel is just a Color24 at a certain coordinate
 		// NOTE: the origin of the coordinate system is the TOP LEFT corner
 		// returns false in case of error (coordinate outside bitmap range)
+		// ACHTUNG: Zählung von p_x und p_y scheint bei 0 zu beginnen...
 		bool getPixel(unsigned int p_x, unsigned int p_y, /*out*/ Color24& p_c);
 		bool setPixel(unsigned int p_x, unsigned int p_y, /*in */ Color24  p_c);
 

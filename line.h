@@ -39,4 +39,6 @@ namespace bmp
 		//       from the bitmap which the lineto is later applied to
 		bmp::RelativeCoordinate to;
 	};
+
+
 }

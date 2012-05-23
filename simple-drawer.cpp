@@ -1,13 +1,13 @@
 #include "batchbmp.h"
 #include "line.h"
-#include "test.h"
+//#include "test.h"
 
 #include <iostream>
 
 
 int main()
 {
-	bmp::BatchBitmap24 blackBitmap(10, 10);
+	bmp::BatchBitmap24 blackBitmap(200, 200);
 
 	bmp::Color24 blue = {0, 0, 255};
 
@@ -19,8 +19,10 @@ int main()
 		}
 	}
 
+	bmp::Color24 red = {255, 0, 0};
 	bmp::AbsoluteCoordinate end(blackBitmap);
-	if(!end.set(9, 5))
+	blackBitmap.setCurrentColor(red);
+	if(!end.set(90, 50))
 	{
 		std::cout << "error!" << std::endl;
 	}else
@@ -30,8 +32,8 @@ int main()
 	}
 
 
-	blackBitmap.save("foo.bmp");
 
+	blackBitmap.save("foo.bmp");
 
 	return 0;
 }

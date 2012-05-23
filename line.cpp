@@ -2,9 +2,10 @@
 
 #include <cmath>
 
-
 namespace bmp
 {
+	int round(float zahl);
+
 	bool line::draw(Bitmap24& p_target, AbsoluteCoordinate p_from, AbsoluteCoordinate p_to, Color24 p_color)
 	{
 		if(!p_from.refersTo(p_target) || !p_to.refersTo(p_target))
@@ -12,15 +13,32 @@ namespace bmp
 			return false;
 		}
 
+		// Abstand von Ursprung zu Ziel + Steigung + Y-Achsenabschnitt
+		unsigned int xStart = p_from.getX();
+		unsigned int yStart = p_from.getY();
+		unsigned int xZiel = p_to.getX();
+		unsigned int const xAbstand = (xZiel - xStart);
+		unsigned int const yAbstand = (p_to.getY() - yStart);
 
-		// please IMPLEMENT here!!
+		float steigung = std::abs(static_cast<float>(yAbstand)/xAbstand);
 
+		float yAchse = yStart - steigung * xStart;
+
+		int deltaX = 1;
+		if(xAbstand < 0)
+		{
+			deltaX = -1;
+		}
+
+		// Linie malen: durchlaufe spalten (x) und bemale gerundetes y-Feld
+		//				nach Geradengleichung
+		for(unsigned int spalte=xStart; spalte!=xZiel; spalte+=deltaX)
+		{
+			p_target.setPixel(spalte,round(steigung*spalte+yAchse),p_color);
+		}
 
 		return true;
 	}
-
-
-
 
 	lineto::lineto(bmp::RelativeCoordinate p_to)
 		: to( p_to )
@@ -42,5 +60,19 @@ namespace bmp
 		}
 
 		return p.setCurrentPos( absTo );
+	}
+
+	int round(float zahl)
+	{
+		int gerundet = 0;
+		if(zahl < 0.0f)
+		{
+			gerundet = static_cast<int>(std::floor(zahl + 0.5));
+		}
+		else
+		{
+			gerundet = static_cast<int>(std::ceil(zahl - 0.5));
+		}
+		return gerundet;
 	}
 }
